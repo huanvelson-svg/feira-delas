@@ -1,1 +1,83 @@
-# feira-delas
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Feira Delas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #1f3d2b;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .box {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      background: green;
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🌿 Feira Delas</h1>
+<p>Confirme presença e participe do sorteio</p>
+
+<div class="box" id="box">
+
+  <p>📅 23 de maio</p>
+  <p>⏰ 8h</p>
+  <p>📍 Vila Jacuí</p>
+
+  <form onsubmit="confirmar(event)">
+    <input id="nome" placeholder="Seu nome" required>
+    <input id="whatsapp" placeholder="Seu WhatsApp" required>
+    <button>Confirmar presença</button>
+  </form>
+
+</div>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbzw-IZnCAT8g7u4MMvdyTCbAyFTj35Q1bN_g_ib5_TuXYXZm7FNYrPsxhAYoqRsiNNZMQ/exec";
+
+function confirmar(e){
+  e.preventDefault();
+
+  let nome = document.getElementById("nome").value;
+  let zap = document.getElementById("whatsapp").value;
+
+  fetch(API, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify({ nome: nome, whatsapp: zap })
+  });
+
+  document.getElementById("box").innerHTML = `
+    <h2>Confirmado 🎉</h2>
+    <p>Valeu, ${nome}</p>
+    <a href="https://wa.me/5511963919384">Ir pro WhatsApp</a>
+  `;
+}
+</script>
+
+</body>
+</html>
