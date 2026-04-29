@@ -1,235 +1,258 @@
-import React, { useState } from 'react';
-import { 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  Utensils, 
-  Scissors, 
-  Leaf, 
-  CheckCircle2, 
-  MessageCircle,
-  Gift,
-  Loader2
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feira Local 🌿</title>
+  
+  <!-- Carrega o Tailwind CSS para o design -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Carrega os ícones Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-export default function App() {
-  const [formData, setFormData] = useState({ nome: '', whatsapp: '' });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const API = "https://script.google.com/macros/s/AKfycbzw-IZnCAT8g7u4MMvdyTCbAyFTj35Q1bN_g_ib5_TuXYXZm7FNYrPsxhAYoqRsiNNZMQ/exec";
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      // Usando no-cors assim como no seu código original
-      await fetch(API, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(formData)
-      });
-      // Como é no-cors, não podemos ler a resposta, assumimos sucesso se não der erro de rede
-      setIsSubmitted(true);
-    } catch (error) {
-      console.error("Erro ao enviar:", error);
-      alert("Houve um erro ao enviar. Tente novamente.");
-    } finally {
-      setIsLoading(false);
+  <style>
+    /* Pequenas animações personalizadas */
+    @keyframes fadeInZoom {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
     }
-  };
+    .animate-in {
+      animation: fadeInZoom 0.5s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#F7F5EE] text-stone-800 font-sans flex flex-col items-center py-10 px-4 relative overflow-x-hidden">
 
-  const whatsappLink = `https://wa.me/5511963919384?text=${encodeURIComponent(`Oi! Eu (${formData.nome}) confirmei presença na Feira Local 🌿`)}`;
+  <!-- Background Decorativo (Folhas sutis) -->
+  <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#e3eadd] to-transparent opacity-50 pointer-events-none"></div>
 
-  return (
-    <div className="min-h-screen bg-[#F7F5EE] text-stone-800 font-sans flex flex-col items-center py-10 px-4 relative overflow-hidden">
-      
-      {/* Background Decorativo (Folhas sutis) */}
-      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#e3eadd] to-transparent opacity-50 pointer-events-none"></div>
+  <div class="w-full max-w-md relative z-10 space-y-6">
+    
+    <!-- Header / Título -->
+    <div class="text-center space-y-2">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-[#2A4029] rounded-full text-[#F7F5EE] mb-2 shadow-lg">
+        <i data-lucide="leaf" class="w-10 h-10"></i>
+      </div>
+      <h1 class="text-5xl font-extrabold text-[#2A4029] tracking-tight" style="font-family: Georgia, serif;">
+        Feira Local
+      </h1>
+      <p class="text-sm font-bold tracking-widest text-[#5c7a59] uppercase">
+        Mulheres do G.A.U.
+      </p>
+    </div>
 
-      <div className="w-full max-w-md relative z-10 space-y-6">
-        
-        {/* Header / Título */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-[#2A4029] rounded-full text-[#F7F5EE] mb-2 shadow-lg">
-            <Leaf size={40} />
-          </div>
-          <h1 className="text-5xl font-extrabold text-[#2A4029] tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>
-            Feira Local
-          </h1>
-          <p className="text-sm font-bold tracking-widest text-[#5c7a59] uppercase">
-            Mulheres do G.A.U.
-          </p>
+    <!-- Categorias -->
+    <div class="flex justify-center gap-3 flex-wrap">
+      <span class="bg-white border border-[#d2dcd0] text-[#2A4029] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-sm">
+        <i data-lucide="utensils" class="w-3.5 h-3.5"></i> Comida
+      </span>
+      <span class="bg-white border border-[#d2dcd0] text-[#2A4029] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-sm">
+        <i data-lucide="scissors" class="w-3.5 h-3.5"></i> Artesanato
+      </span>
+      <span class="bg-white border border-[#d2dcd0] text-[#2A4029] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-sm">
+        <i data-lucide="leaf" class="w-3.5 h-3.5"></i> Hortaliças
+      </span>
+    </div>
+
+    <!-- Descrição -->
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-[#e8ece7] text-center space-y-4">
+      <p class="text-[#4a5e48] leading-relaxed">
+        Um encontro criado para <strong>fortalecer quem empreende na região</strong> e valorizar o que é feito aqui, perto da gente.
+      </p>
+      <p class="text-[#4a5e48] leading-relaxed text-sm">
+        Se você quer consumir melhor, conhecer gente da sua região e apoiar pequenos negócios, é só aparecer por lá 💚
+      </p>
+    </div>
+
+    <!-- Card Escuro - Info do Evento -->
+    <div class="bg-[#2A4029] text-[#F7F5EE] p-6 rounded-3xl shadow-xl space-y-5 relative overflow-hidden">
+      <!-- Detalhe visual de brilho -->
+      <div class="absolute -top-10 -right-10 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl"></div>
+
+      <div class="flex items-center gap-4">
+        <div class="p-3 border border-[#4a6349] rounded-2xl bg-[#354f34]">
+          <i data-lucide="calendar" class="w-6 h-6 text-[#c1d6bd]"></i>
         </div>
-
-        {/* Categorias */}
-        <div className="flex justify-center gap-3 flex-wrap">
-          <span className="bg-white border border-[#d2dcd0] text-[#2A4029] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-sm">
-            <Utensils size={14} /> Comida
-          </span>
-          <span className="bg-white border border-[#d2dcd0] text-[#2A4029] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-sm">
-            <Scissors size={14} /> Artesanato
-          </span>
-          <span className="bg-white border border-[#d2dcd0] text-[#2A4029] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-sm">
-            <Leaf size={14} /> Hortaliças
-          </span>
+        <div>
+          <p class="text-sm text-[#a3bba0] font-medium uppercase tracking-wider">Data</p>
+          <p class="text-lg font-bold">23 de Maio (Sábado)</p>
         </div>
+      </div>
 
-        {/* Descrição */}
-        <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#e8ece7] text-center space-y-4">
-          <p className="text-[#4a5e48] leading-relaxed">
-            Um encontro criado para <strong>fortalecer quem empreende na região</strong> e valorizar o que é feito aqui, perto da gente.
-          </p>
-          <p className="text-[#4a5e48] leading-relaxed text-sm">
-            Se você quer consumir melhor, conhecer gente da sua região e apoiar pequenos negócios, é só aparecer por lá 💚
-          </p>
+      <div class="h-px w-full bg-gradient-to-r from-transparent via-[#4a6349] to-transparent"></div>
+
+      <div class="flex items-center gap-4">
+        <div class="p-3 border border-[#4a6349] rounded-2xl bg-[#354f34]">
+          <i data-lucide="clock" class="w-6 h-6 text-[#c1d6bd]"></i>
         </div>
-
-        {/* Card Escuro - Info do Evento */}
-        <div className="bg-[#2A4029] text-[#F7F5EE] p-6 rounded-3xl shadow-xl space-y-5 relative overflow-hidden">
-          {/* Detalhe visual de brilho */}
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl"></div>
-
-          <div className="flex items-center gap-4">
-            <div className="p-3 border border-[#4a6349] rounded-2xl bg-[#354f34]">
-              <Calendar size={24} className="text-[#c1d6bd]" />
-            </div>
-            <div>
-              <p className="text-sm text-[#a3bba0] font-medium uppercase tracking-wider">Data</p>
-              <p className="text-lg font-bold">23 de Maio (Sábado)</p>
-            </div>
-          </div>
-
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-[#4a6349] to-transparent"></div>
-
-          <div className="flex items-center gap-4">
-            <div className="p-3 border border-[#4a6349] rounded-2xl bg-[#354f34]">
-              <Clock size={24} className="text-[#c1d6bd]" />
-            </div>
-            <div>
-              <p className="text-sm text-[#a3bba0] font-medium uppercase tracking-wider">Horário</p>
-              <p className="text-lg font-bold">A partir das 08h</p>
-            </div>
-          </div>
-
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-[#4a6349] to-transparent"></div>
-
-          <div className="flex items-center gap-4">
-            <div className="p-3 border border-[#4a6349] rounded-2xl bg-[#354f34]">
-              <MapPin size={24} className="text-[#c1d6bd]" />
-            </div>
-            <div>
-              <p className="text-sm text-[#a3bba0] font-medium uppercase tracking-wider">Local</p>
-              <p className="text-[15px] font-bold leading-tight">R. Papiro-do-Egito, 100b</p>
-              <p className="text-sm text-[#a3bba0]">Vila Jacuí, São Paulo - SP</p>
-            </div>
-          </div>
+        <div>
+          <p class="text-sm text-[#a3bba0] font-medium uppercase tracking-wider">Horário</p>
+          <p class="text-lg font-bold">A partir das 08h</p>
         </div>
+      </div>
 
-        {/* Área do Formulário / Sucesso */}
-        {!isSubmitted ? (
-          <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-lg border-2 border-[#e3eadd]">
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-[#f0f4ef] rounded-full text-[#2A4029] mb-3">
-                <Gift size={24} />
-              </div>
-              <h2 className="text-xl font-bold text-[#2A4029]">Confirme sua Presença</h2>
-              <p className="text-sm text-[#5c7a59] mt-1">E participe de sorteios exclusivos no dia!</p>
-            </div>
+      <div class="h-px w-full bg-gradient-to-r from-transparent via-[#4a6349] to-transparent"></div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="nome" className="block text-sm font-semibold text-[#4a5e48] mb-1.5 ml-1">
-                  Seu Nome
-                </label>
-                <input
-                  type="text"
-                  id="nome"
-                  name="nome"
-                  value={formData.nome}
-                  onChange={handleChange}
-                  placeholder="Como devemos te chamar?"
-                  required
-                  className="w-full px-4 py-3 bg-[#F7F5EE] border border-[#d2dcd0] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2A4029] focus:border-transparent transition-all placeholder:text-stone-400"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="whatsapp" className="block text-sm font-semibold text-[#4a5e48] mb-1.5 ml-1">
-                  Seu WhatsApp
-                </label>
-                <input
-                  type="tel"
-                  id="whatsapp"
-                  name="whatsapp"
-                  value={formData.whatsapp}
-                  onChange={handleChange}
-                  placeholder="(11) 90000-0000"
-                  required
-                  className="w-full px-4 py-3 bg-[#F7F5EE] border border-[#d2dcd0] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2A4029] focus:border-transparent transition-all placeholder:text-stone-400"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full mt-2 bg-[#2A4029] hover:bg-[#1f301e] text-white font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 size={20} className="animate-spin" />
-                    Confirmando...
-                  </>
-                ) : (
-                  <>
-                    Confirmar Presença 👀
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-        ) : (
-          <div className="bg-white p-8 rounded-3xl shadow-lg border-2 border-[#e3eadd] text-center space-y-5 animate-in fade-in zoom-in duration-500">
-            <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-2">
-              <CheckCircle2 size={40} />
-            </div>
-            
-            <div>
-              <h2 className="text-2xl font-bold text-[#2A4029]">Presença confirmada!</h2>
-              <p className="text-[#5c7a59] mt-2 text-lg">Obrigado, <strong>{formData.nome}</strong> 👀</p>
-              <p className="text-sm text-[#5c7a59] mt-1 bg-[#f0f4ef] inline-block px-3 py-1 rounded-full">
-                Você já está participando do sorteio! 🎉
-              </p>
-            </div>
-
-            <div className="pt-4 border-t border-[#e8ece7]">
-              <a 
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-green-500/20"
-              >
-                <MessageCircle size={22} />
-                Ir pro Grupo do WhatsApp
-              </a>
-              <p className="text-xs text-stone-400 mt-3">Clique acima para receber as novidades em primeira mão.</p>
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
-        <div className="text-center pb-8 pt-4">
-          <p className="text-xs text-[#8c9e8a] font-medium">
-            @mulheresdogau • Feira Local
-          </p>
+      <div class="flex items-center gap-4">
+        <div class="p-3 border border-[#4a6349] rounded-2xl bg-[#354f34]">
+          <i data-lucide="map-pin" class="w-6 h-6 text-[#c1d6bd]"></i>
         </div>
-
+        <div>
+          <p class="text-sm text-[#a3bba0] font-medium uppercase tracking-wider">Local</p>
+          <p class="text-[15px] font-bold leading-tight">R. Papiro-do-Egito, 100b</p>
+          <p class="text-sm text-[#a3bba0]">Vila Jacuí, São Paulo - SP</p>
+        </div>
       </div>
     </div>
-  );
-}
+
+    <!-- Área do Formulário -->
+    <div id="form-section" class="bg-white p-6 sm:p-8 rounded-3xl shadow-lg border-2 border-[#e3eadd]">
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center justify-center w-12 h-12 bg-[#f0f4ef] rounded-full text-[#2A4029] mb-3">
+          <i data-lucide="gift" class="w-6 h-6"></i>
+        </div>
+        <h2 class="text-xl font-bold text-[#2A4029]">Confirme sua Presença</h2>
+        <p class="text-sm text-[#5c7a59] mt-1">E participe de sorteios exclusivos no dia!</p>
+      </div>
+
+      <form id="rsvp-form" class="space-y-4">
+        <div>
+          <label for="nome" class="block text-sm font-semibold text-[#4a5e48] mb-1.5 ml-1">
+            Seu Nome
+          </label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Como devemos te chamar?"
+            required
+            class="w-full px-4 py-3 bg-[#F7F5EE] border border-[#d2dcd0] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2A4029] focus:border-transparent transition-all placeholder:text-stone-400"
+          />
+        </div>
+
+        <div>
+          <label for="whatsapp" class="block text-sm font-semibold text-[#4a5e48] mb-1.5 ml-1">
+            Seu WhatsApp
+          </label>
+          <input
+            type="tel"
+            id="whatsapp"
+            name="whatsapp"
+            placeholder="(11) 90000-0000"
+            required
+            class="w-full px-4 py-3 bg-[#F7F5EE] border border-[#d2dcd0] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2A4029] focus:border-transparent transition-all placeholder:text-stone-400"
+          />
+        </div>
+
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full mt-2 bg-[#2A4029] hover:bg-[#1f301e] text-white font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2"
+        >
+          <i data-lucide="loader-2" id="loading-icon" class="w-5 h-5 animate-spin hidden"></i>
+          <span id="btn-text">Confirmar Presença 👀</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Área de Sucesso (Inicialmente Oculta) -->
+    <div id="success-section" class="bg-white p-8 rounded-3xl shadow-lg border-2 border-[#e3eadd] text-center space-y-5 hidden animate-in">
+      <div class="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-2">
+        <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+      </div>
+      
+      <div>
+        <h2 class="text-2xl font-bold text-[#2A4029]">Presença confirmada!</h2>
+        <p class="text-[#5c7a59] mt-2 text-lg">Obrigado, <strong id="success-name"></strong> 👀</p>
+        <p class="text-sm text-[#5c7a59] mt-1 bg-[#f0f4ef] inline-block px-3 py-1 rounded-full">
+          Você já está participando do sorteio! 🎉
+        </p>
+      </div>
+
+      <div class="pt-4 border-t border-[#e8ece7]">
+        <a 
+          id="whatsapp-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-green-500/20"
+        >
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          Quero falar no whatsapp
+        </a>
+        <p class="text-xs text-stone-400 mt-3">Clique acima para receber as novidades em primeira mão.</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center pb-8 pt-4">
+      <p class="text-xs text-[#8c9e8a] font-medium">
+        @mulheresdogau • Feira Local
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    // Inicializar os ícones
+    lucide.createIcons();
+
+    // Lógica do Formulário
+    const API = "https://script.google.com/macros/s/AKfycbzw-IZnCAT8g7u4MMvdyTCbAyFTj35Q1bN_g_ib5_TuXYXZm7FNYrPsxhAYoqRsiNNZMQ/exec";
+    
+    const form = document.getElementById('rsvp-form');
+    const formSection = document.getElementById('form-section');
+    const successSection = document.getElementById('success-section');
+    
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const loadingIcon = document.getElementById('loading-icon');
+    
+    const successNameEl = document.getElementById('success-name');
+    const whatsappLinkEl = document.getElementById('whatsapp-link');
+
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById('nome').value;
+      const whatsapp = document.getElementById('whatsapp').value;
+
+      // Estado de Carregamento
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+      btnText.textContent = "Confirmando...";
+      loadingIcon.classList.remove('hidden');
+
+      try {
+        await fetch(API, {
+          method: "POST",
+          mode: "no-cors",
+          body: JSON.stringify({
+            nome: nome,
+            whatsapp: whatsapp
+          })
+        });
+
+        // Configurar a mensagem de sucesso e link do WhatsApp
+        successNameEl.textContent = nome;
+        const mensagemBase = `Oi! Eu ${nome} confirmei presença na Feira Local`;
+        whatsappLinkEl.href = `https://wa.me/5511963919384?text=${encodeURIComponent(mensagemBase)}`;
+
+        // Esconder formulário, mostrar sucesso
+        formSection.classList.add('hidden');
+        successSection.classList.remove('hidden');
+
+      } catch (error) {
+        console.error("Erro ao enviar:", error);
+        alert("Houve um erro ao confirmar presença. Por favor, tente novamente.");
+        
+        // Restaurar estado do botão em caso de erro
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+        btnText.textContent = "Confirmar Presença 👀";
+        loadingIcon.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
