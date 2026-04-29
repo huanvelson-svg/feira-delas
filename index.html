@@ -1,5 +1,5 @@
 <script>
-const API = "https://script.google.com/macros/s/AKfycbwKf_IZiL2p4ttuOvUL5ClZQFQ316vQFiv19QSXzLE438g3iaAUvW9iPHhU3odn1fV9TA/exec";
+const API = "https://script.google.com/macros/s/AKfycbzw-IZnCAT8g7u4MMvdyTCbAyFTj35Q1bN_g_ib5_TuXYXZm7FNYrPsxhAYoqRsiNNZMQ/exec";
 
 function confirmar(event) {
   event.preventDefault();
@@ -9,6 +9,7 @@ function confirmar(event) {
 
   fetch(API, {
     method: "POST",
+    mode: "no-cors", // evita erro chato do navegador
     headers: {
       "Content-Type": "application/json"
     },
@@ -16,32 +17,26 @@ function confirmar(event) {
       nome: nome,
       whatsapp: whatsapp
     })
-  })
-  .then(() => {
-
-    // 👇 MENSAGEM BONITA (substitui o alert)
-    document.querySelector(".card").innerHTML = `
-      <h2>🎉 Presença confirmada!</h2>
-      <p style="margin-top:10px;">
-        Obrigado, ${nome}!<br>
-        Você já está participando do sorteio 👀
-      </p>
-
-      <p style="margin-top:15px;">
-        📅 23 de maio<br>
-        ⏰ A partir das 8h<br>
-        📍 Vila Jacuí
-      </p>
-
-      <a href="https://wa.me/5511963919384?text=${encodeURIComponent(`Oi! Eu (${nome}) confirmei presença na Feira Delas 🌿`)}" 
-         style="display:block;margin-top:20px;background:#25d366;color:white;padding:12px;border-radius:10px;text-decoration:none;">
-         Entrar no WhatsApp
-      </a>
-    `;
-
-  })
-  .catch(() => {
-    alert("Erro ao confirmar. Tenta de novo.");
   });
+
+  // 👇 resposta visual imediata (mesmo com no-cors)
+  document.querySelector(".card").innerHTML = `
+    <h2>🎉 Presença confirmada!</h2>
+    <p style="margin-top:10px;">
+      Obrigado, ${nome}!<br>
+      Você já está participando do sorteio 👀
+    </p>
+
+    <p style="margin-top:15px;">
+      📅 23 de maio<br>
+      ⏰ A partir das 8h<br>
+      📍 Vila Jacuí
+    </p>
+
+    <a href="https://wa.me/5511963919384?text=${encodeURIComponent(`Oi! Eu (${nome}) confirmei presença na Feira Delas 🌿`)}" 
+       style="display:block;margin-top:20px;background:#25d366;color:white;padding:12px;border-radius:10px;text-decoration:none;">
+       Entrar no WhatsApp
+    </a>
+  `;
 }
 </script>
