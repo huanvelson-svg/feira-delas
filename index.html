@@ -2,97 +2,79 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Feira Delas 🌿</title>
+  <title>Feira Delas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: Arial;
       background: #1f3d2b;
       color: white;
       text-align: center;
+      padding: 20px;
     }
 
-    .container {
+    .box {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
       max-width: 400px;
       margin: auto;
-      padding: 20px;
-    }
-
-    .card {
-      background: white;
-      color: #1f3d2b;
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 20px;
     }
 
     input, button {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin-top: 10px;
-      border-radius: 8px;
-      border: none;
     }
 
     button {
-      background: #2e7d32;
+      background: green;
       color: white;
-      font-weight: bold;
-      cursor: pointer;
+      border: none;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+<h1>🌿 Feira Delas</h1>
+<p>Confirme presença e participe do sorteio</p>
 
-  <h1>🌿 Feira Delas</h1>
-  <p>Confirme sua presença e participe do sorteio 🎁</p>
+<div class="box" id="box">
 
-  <div class="card" id="card">
-    <p>📅 23 de maio</p>
-    <p>⏰ A partir das 8h</p>
-    <p>📍 Vila Jacuí</p>
+  <p>📅 23 de maio</p>
+  <p>⏰ 8h</p>
+  <p>📍 Vila Jacuí</p>
 
-    <form onsubmit="confirmar(event)">
-      <input type="text" id="nome" placeholder="Seu nome" required>
-      <input type="tel" id="whatsapp" placeholder="Seu WhatsApp" required>
-      <button type="submit">Confirmar presença</button>
-    </form>
-  </div>
+  <form onsubmit="confirmar(event)">
+    <input id="nome" placeholder="Seu nome" required>
+    <input id="whatsapp" placeholder="Seu WhatsApp" required>
+    <button>Confirmar presença</button>
+  </form>
 
 </div>
 
 <script>
 const API = "https://script.google.com/macros/s/AKfycbzw-IZnCAT8g7u4MMvdyTCbAyFTj35Q1bN_g_ib5_TuXYXZm7FNYrPsxhAYoqRsiNNZMQ/exec";
 
-function confirmar(event) {
-  event.preventDefault();
+function confirmar(e){
+  e.preventDefault();
 
   let nome = document.getElementById("nome").value;
-  let whatsapp = document.getElementById("whatsapp").value;
+  let zap = document.getElementById("whatsapp").value;
 
   fetch(API, {
     method: "POST",
     mode: "no-cors",
-    body: JSON.stringify({
-      nome: nome,
-      whatsapp: whatsapp
-    })
+    body: JSON.stringify({ nome: nome, whatsapp: zap })
   });
 
-  document.getElementById("card").innerHTML = `
-    <h2>🎉 Confirmado!</h2>
-    <p>Valeu, ${nome} 👀</p>
-    <p>Você já está no sorteio</p>
-
-    <a href="https://wa.me/5511963919384?text=${encodeURIComponent(`Oi! Eu (${nome}) confirmei presença na Feira Delas 🌿`)}"
-       style="display:block;margin-top:20px;background:#25d366;color:white;padding:10px;border-radius:8px;text-decoration:none;">
-       Ir pro WhatsApp
-    </a>
+  document.getElementById("box").innerHTML = `
+    <h2>Confirmado 🎉</h2>
+    <p>Valeu, ${nome}</p>
+    <a href="https://wa.me/5511963919384">Ir pro WhatsApp</a>
   `;
 }
 </script>
