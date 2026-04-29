@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Feira Delas 🌿</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(180deg, #1f3d2b, #2e7d32);
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-top: 20px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: white;
+      color: #1f3d2b;
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .info {
+      margin: 8px 0;
+      font-weight: 500;
+    }
+
+    .counter {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #2e7d32;
+      font-size: 18px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #2e7d32;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #256628;
+    }
+
+    .bonus {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #2e7d32;
+      font-weight: 600;
+    }
+
+    .zap {
+      display: block;
+      margin-top: 15px;
+      padding: 14px;
+      background: #25d366;
+      color: white;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 13px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🌿 Feira Delas</h1>
+  <p class="subtitle">Comida • Artesanato • Brechó • Hortaliças</p>
+
+  <div class="card">
+    <p class="info">📅 23 de maio (sábado)</p>
+    <p class="info">⏰ A partir das 8h</p>
+    <p class="info">📍 Vila Jacuí – SP</p>
+
+    <p class="counter" id="contador">
+      Carregando confirmações...
+    </p>
+  </div>
+
+  <div class="card">
+    <p>
+      Evento gratuito pra fortalecer quem empreende na quebrada.
+    </p>
+
+    <p class="bonus">
+      🎁 Confirme e participe do sorteio no dia
+    </p>
+
+    <form onsubmit="confirmar(event)">
+      <input type="text" id="nome" placeholder="Seu nome" required>
+      <input type="tel" id="whatsapp" placeholder="Seu WhatsApp" required>
+      <button type="submit">Confirmar presença</button>
+    </form>
+
+    <a class="zap" target="_blank" href="https://wa.me/5511999999999">
+      Falar no WhatsApp
+    </a>
+  </div>
+
+  <div class="footer">
+    @mulheresdogau
+  </div>
+
+</div>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbwKf_IZiL2p4ttuOvUL5ClZQFQ316vQFiv19QSXzLE438g3iaAUvW9iPHhU3odn1fV9TA/exec";
+
+function confirmar(event) {
+  event.preventDefault();
+
+  let nome = document.getElementById("nome").value;
+  let whatsapp = document.getElementById("whatsapp").value;
+
+  fetch(API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      nome: nome,
+      whatsapp: whatsapp
+    })
+  })
+  .then(() => {
+    alert("Presença confirmada! 🎉");
+
+    let mensagem = `Oi! Meu nome é ${nome} e confirmei presença na Feira Delas 🌿`;
+    window.open(`https://wa.me/5511963919384?text=${encodeURIComponent(mensagem)}`, "_blank");
+
+    carregarContador();
+  });
+}
+
+function carregarContador() {
+  fetch(API)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("contador").innerText =
+        data.total + " pessoas já confirmaram 👀";
+    })
+    .catch(() => {
+      document.getElementById("contador").innerText =
+        "Várias pessoas já confirmaram 👀";
+    });
+}
+
+carregarContador();
+</script>
+
+</body>
+</html>
