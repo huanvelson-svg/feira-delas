@@ -1,1 +1,129 @@
-<h1>FUNCIONOU</h1>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Feira Delas 🌿</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #1f3d2b, #2e7d32);
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    .card {
+      background: white;
+      color: #1f3d2b;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      background: #2e7d32;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .zap {
+      display: block;
+      margin-top: 15px;
+      background: #25d366;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🌿 Feira Delas</h1>
+  <p>Comida • Artesanato • Brechó • Hortaliças</p>
+
+  <div class="card" id="card">
+
+    <p>📅 23 de maio (sábado)</p>
+    <p>⏰ A partir das 8h</p>
+    <p>📍 Vila Jacuí – SP</p>
+
+    <p><strong>🎁 Confirme presença e participe do sorteio</strong></p>
+
+    <form onsubmit="confirmar(event)">
+      <input type="text" id="nome" placeholder="Seu nome" required>
+      <input type="tel" id="whatsapp" placeholder="Seu WhatsApp" required>
+      <button type="submit">Confirmar presença</button>
+    </form>
+
+  </div>
+
+</div>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbzw-IZnCAT8g7u4MMvdyTCbAyFTj35Q1bN_g_ib5_TuXYXZm7FNYrPsxhAYoqRsiNNZMQ/exec";
+
+function confirmar(event) {
+  event.preventDefault();
+
+  let nome = document.getElementById("nome").value;
+  let whatsapp = document.getElementById("whatsapp").value;
+
+  fetch(API, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify({
+      nome: nome,
+      whatsapp: whatsapp
+    })
+  });
+
+  document.getElementById("card").innerHTML = `
+    <h2>🎉 Presença confirmada!</h2>
+    <p>Obrigado, ${nome} 👀</p>
+    <p>Você já está participando do sorteio</p>
+
+    <p style="margin-top:15px;">
+      📅 23 de maio<br>
+      ⏰ A partir das 8h<br>
+      📍 Vila Jacuí
+    </p>
+
+    <a class="zap" href="https://wa.me/5511963919384?text=${encodeURIComponent(`Oi! Eu (${nome}) confirmei presença na Feira Delas 🌿`)}}">
+      Ir pro WhatsApp
+    </a>
+  `;
+}
+</script>
+
+</body>
+</html>
