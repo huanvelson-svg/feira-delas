@@ -1,3 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Feira Delas 🌿</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #1f3d2b;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      color: #1f3d2b;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background: #2e7d32;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🌿 Feira Delas</h1>
+  <p>Confirme sua presença e participe do sorteio 🎁</p>
+
+  <div class="card" id="card">
+    <p>📅 23 de maio</p>
+    <p>⏰ A partir das 8h</p>
+    <p>📍 Vila Jacuí</p>
+
+    <form onsubmit="confirmar(event)">
+      <input type="text" id="nome" placeholder="Seu nome" required>
+      <input type="tel" id="whatsapp" placeholder="Seu WhatsApp" required>
+      <button type="submit">Confirmar presença</button>
+    </form>
+  </div>
+
+</div>
+
 <script>
 const API = "https://script.google.com/macros/s/AKfycbzw-IZnCAT8g7u4MMvdyTCbAyFTj35Q1bN_g_ib5_TuXYXZm7FNYrPsxhAYoqRsiNNZMQ/exec";
 
@@ -9,34 +77,25 @@ function confirmar(event) {
 
   fetch(API, {
     method: "POST",
-    mode: "no-cors", // evita erro chato do navegador
-    headers: {
-      "Content-Type": "application/json"
-    },
+    mode: "no-cors",
     body: JSON.stringify({
       nome: nome,
       whatsapp: whatsapp
     })
   });
 
-  // 👇 resposta visual imediata (mesmo com no-cors)
-  document.querySelector(".card").innerHTML = `
-    <h2>🎉 Presença confirmada!</h2>
-    <p style="margin-top:10px;">
-      Obrigado, ${nome}!<br>
-      Você já está participando do sorteio 👀
-    </p>
+  document.getElementById("card").innerHTML = `
+    <h2>🎉 Confirmado!</h2>
+    <p>Valeu, ${nome} 👀</p>
+    <p>Você já está no sorteio</p>
 
-    <p style="margin-top:15px;">
-      📅 23 de maio<br>
-      ⏰ A partir das 8h<br>
-      📍 Vila Jacuí
-    </p>
-
-    <a href="https://wa.me/5511963919384?text=${encodeURIComponent(`Oi! Eu (${nome}) confirmei presença na Feira Delas 🌿`)}" 
-       style="display:block;margin-top:20px;background:#25d366;color:white;padding:12px;border-radius:10px;text-decoration:none;">
-       Entrar no WhatsApp
+    <a href="https://wa.me/5511963919384?text=${encodeURIComponent(`Oi! Eu (${nome}) confirmei presença na Feira Delas 🌿`)}"
+       style="display:block;margin-top:20px;background:#25d366;color:white;padding:10px;border-radius:8px;text-decoration:none;">
+       Ir pro WhatsApp
     </a>
   `;
 }
 </script>
+
+</body>
+</html>
